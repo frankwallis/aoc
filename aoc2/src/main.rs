@@ -63,17 +63,36 @@ fn solve2(input: &[String]) {
     }
 }
 
-fn get_distance(str1: &String, str2: &String) -> usize {
+fn get_distance(str1: &str, str2: &str) -> usize {
     str1.chars()
         .zip(str2.chars())
         .filter(|(chr1, chr2)| chr1 != chr2)
         .count()
 }
 
-fn get_common_letters(str1: &String, str2: &String) -> String {
+fn get_common_letters(str1: &str, str2: &str) -> String {
     str1.chars()
         .zip(str2.chars())
         .filter(|(chr1, chr2)| chr1 == chr2)
         .map(|(chr1, _chr2)| chr1)
         .collect()
+}
+
+#[cfg(test)]
+mod tests_solve2 {
+    use super::*;
+
+    #[test]
+    fn test_get_common_letters() {
+        assert_eq!(get_common_letters("abcdef", "abcdef"), "abcdef");
+        assert_eq!(get_common_letters("abxdef", "abcdef"), "abdef");
+        assert_eq!(get_common_letters("abcdef", "uvwxyz"), "");
+    }
+
+    #[test]
+    fn test_get_distance() {
+        assert_eq!(get_distance("abcdef", "abcdef"), 0);
+        assert_eq!(get_distance("abxdef", "abcdef"), 1);
+        assert_eq!(get_distance("abcdef", "uvwxyz"), 6);        
+    }
 }
